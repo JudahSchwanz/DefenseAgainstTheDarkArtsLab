@@ -1,0 +1,25 @@
+Dave Mitchell, dmitchell, Chief Executive Officer
+Bob Rodriguez, brodriguez, Chief Information Officer
+Brandon Davis, bdavis, IT Director
+David Thompson, dthompson, HR Manager
+Emily Parker, eparker, Operations Manager
+Robert Williams, rwilliams, Sales Director
+Amanda Foster, afoster, Marketing Manager
+James Anderson, janderson, Senior Developer
+Lisa Nguyen, lnguyen, Senior Developer
+Christopher Lee, clee, Junior Developer
+Rachel Martinez, rmartinez, Junior Developer
+Kevin Brown, kbrown, Help Desk Technician
+Michelle Davis, mdavis, Accountant
+Daniel Harris, dharris, Customer Service Representative
+Jessica Taylor, jtaylor, Administrative Assistant
+
+Admin List
+dmitchell
+brodriguez
+bdavis
+eparker
+janderson
+lnguyen
+clee
+rmartinez
