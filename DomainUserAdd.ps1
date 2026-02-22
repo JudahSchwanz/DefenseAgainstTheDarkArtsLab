@@ -52,7 +52,10 @@ foreach ($u in $users) {
     Write-Verbose "Processing user $($u.SamAccountName)"
 
     # create the account if it doesn't already exist
-    if (-not (Get-ADUser -Filter { SamAccountName -eq $u.SamAccountName } -ErrorAction SilentlyContinue)) {
+    # -Filter scriptblocks don't expand variables; use a string instead or
+    # simply query by identity when the sAMAccountName is available.
+    $existing = Get-ADUser -Filter "SamAccountName -eq '$($u.SamAccountName)'" -ErrorAction SilentlyContinue
+    if (-not $existing) {
         New-ADUser -Name           $u.DisplayName `
                    -SamAccountName  $u.SamAccountName `
                    -UserPrincipalName "$($u.SamAccountName)@$domain" `
@@ -69,7 +72,14 @@ foreach ($u in $users) {
         Write-Verbose "User $($u.SamAccountName) already exists" 
     }
 
-    Add-ADGroupMember -Identity 'Domain Users' -Members $u.SamAccountName -ErrorAction SilentlyContinue
+    # always attempt to add to Domain Users; if the account wasn't created a
+    # second query will help avoid the "object not found" error seen earlier.
+    $acct = Get-ADUser -Identity $u.SamAccountName -ErrorAction SilentlyContinue
+    if ($acct) {
+        Add-ADGroupMember -Identity 'Domain Users' -Members $acct -ErrorAction SilentlyContinue
+    } else {
+        Write-Warning "Failed to locate '$($u.SamAccountName)' for group membership."
+    }
 }
 
 foreach ($a in $admins) {
